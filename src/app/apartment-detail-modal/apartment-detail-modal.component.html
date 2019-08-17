@@ -1,0 +1,16 @@
+<div class="modal-body">
+  <h5>Description</h5>
+  <p>{{apartment.description}}</p>
+
+  <div *ngIf="apartment.comment">
+    <h5>Comment</h5>
+    <p>{{apartment.comment}}</p>
+  </div>
+  <div >
+    <h5>Source</h5>
+    <a [href]="apartment.originalLink" target="_blank">{{apartment.originalLink}}</a>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="bsModalRef.hide()"> Close</button>
+</div>

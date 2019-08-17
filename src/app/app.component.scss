@@ -1,0 +1,13 @@
+table {
+  th:nth-child(2),th:nth-child(3),th:nth-child(4),td:nth-child(2),td:nth-child(4),td:nth-child(3) {
+    min-width: 120px;
+    text-align: center;
+  }
+  th:last-child, td:last-child {
+    min-width: 200px;
+    text-align: center;
+  }
+  tbody tr:hover{
+    // cursor: pointer;
+  }
+}

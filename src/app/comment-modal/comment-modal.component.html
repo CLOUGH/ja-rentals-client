@@ -1,0 +1,10 @@
+<div class="modal-body">
+    <div class="form-group">
+      <label for="comment">Comment</label>
+      <textarea class="form-control" name="comment" [(ngModel)]="apartment.comment" rows="10"></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="saveComment()">Save</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="bsModalRef.hide()">Cancel</button>
+  </div>
