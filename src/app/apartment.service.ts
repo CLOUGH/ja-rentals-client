@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { Apartment } from './apartment';
 
 import { map, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApartmentService {
-  private url = 'http://localhost:3000/api/v1/apartments';
+  private url = `${environment.apiUrl}/api/v1/apartments`;
 
   constructor(private http: HttpClient) { }
 
