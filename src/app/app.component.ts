@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   faComment = faComment;
   faMapMarked = faMapMarked;
   statusFilter = '';
+  showComments = false;
 
   constructor(private apartmentService: ApartmentService, private modalService: BsModalService) {
 
@@ -66,6 +67,7 @@ export class AppComponent implements OnInit {
   }
 
   onStatusFilterChanged() {
+    console.log(this.showComments);
     this.apartmentService.getListings({
       statusFilter: this.statusFilter
     }).subscribe(apartments => {

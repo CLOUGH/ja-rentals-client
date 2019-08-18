@@ -1,12 +1,13 @@
 <div class="container">
   <h1 class="text-center mb-5 mt-5">Jamaica Apartments</h1>
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-6 col-lg-3">
     <label for="statusFilter">Status</label>
     <select class="form-control" id="statusFilter" [(ngModel)]="statusFilter" (change)="onStatusFilterChanged()">
       <option value="">All</option>
       <option value="Liked">Liked</option>
       <option value="DisLiked">DisLiked</option>
       <option valiue="Unavaliable">Unavaliable</option>
+      <option valiue="Commented">Commented</option>
     </select>
   </div>
   <table class="table table-hover table-striped">
