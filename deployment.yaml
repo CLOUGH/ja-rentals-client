@@ -1,24 +1,24 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: ja-rentals-client
+  name: ja-rentals-frontend
   labels:
-    app: ja-rentals-client
+    app: ja-rentals-frontend
 spec:
   selector:
     matchLabels:
-      app: ja-rentals-client
+      app: ja-rentals-frontend
       tier: web
   template:
     metadata:
       labels:
-        app: ja-rentals-client
+        app: ja-rentals-frontend
         tier: web
         sha: ${SHORT_SHA}
     spec:
       containers:
-      - name: ja-rentals-client
-        image: gcr.io/website-227817/ja-rentals-client:latest
+      - name: ja-rentals-frontend
+        image: gcr.io/website-227817/ja-rentals-frontend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -26,13 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ja-rentals-client
+  name: ja-rentals-frontend
   labels:
-    app: ja-rentals-client
+    app: ja-rentals-frontend
 spec:
   type: NodePort
   selector:
-    app: ja-rentals-client
+    app: ja-rentals-frontend
     tier: web
   ports:
   - port: 8080
