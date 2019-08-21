@@ -70,13 +70,18 @@ export class AppComponent implements OnInit {
     this.apartmentService.getListings({
       status: this.statusFilter,
       page_size: this.itemsPerPage,
-      pagge: this.currentPage
+      page: this.currentPage
     }).subscribe(apartmentListing => {
       this.apartmentListing = apartmentListing;
     });
   }
+  onPageChanged(event) {
+    setTimeout(() => {
+      this.onFilterChanged();
+    });
+  }
 
-  getLocation(index: number){
+  getLocation(index: number) {
 
   }
 }

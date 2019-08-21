@@ -69,6 +69,6 @@
   </div>
   <div *ngIf="apartmentListing">
     <pagination [totalItems]="apartmentListing.meta.total" [itemsPerPage]="apartmentListing.meta.pageSize"
-      [(ngModel)]="currentPage" (pageChanged)="onFilterChanged()"></pagination>
+      [(ngModel)]="currentPage" (pageChanged)="onPageChanged($event)"></pagination>
   </div>
 </div>
