@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ApartmentDetailModalComponent } from './apartment-detail-modal/apartment-detail-modal.component';
 import { FormsModule } from '@angular/forms';
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
+import { PaginationModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CommentModalComponent } from './comment-modal/comment-modal.component';
     MomentModule,
     FontAwesomeModule,
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
     FormsModule
   ],
   providers: [],

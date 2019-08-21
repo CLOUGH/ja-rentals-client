@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import formurlencode from 'form-urlencoded';
 import { Observable } from 'rxjs';
-import { Apartment } from './apartment';
-
 import { map, catchError } from 'rxjs/operators';
+
 import { environment } from 'src/environments/environment';
+import { Apartment, ApartmentListing } from './apartment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,10 @@ export class ApartmentService {
 
   constructor(private http: HttpClient) { }
 
-  getListings(filter?: any): Observable<Apartment[]> {
-    return this.http.get(`${this.url}?per_page=100${filter && filter.statusFilter ? `&status=${filter.statusFilter}` : ''}`).pipe(
+  getListings(filter?: any): Observable<ApartmentListing> {
+    return this.http.get(`${this.url}?${formurlencode(filter)}`).pipe(
       map(res => {
-        return res as Apartment[];
+        return res as ApartmentListing;
       })
     );
   }

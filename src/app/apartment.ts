@@ -10,3 +10,11 @@ export interface Apartment {
   source?: string;
 }
 
+export interface ApartmentListing {
+  data: Apartment[];
+  meta: {
+    pages: number,
+    total: number,
+    pageSize: number,
+  };
+}

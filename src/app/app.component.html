@@ -1,52 +1,74 @@
 <div class="container">
   <h1 class="text-center mb-5 mt-5">Jamaica Apartments</h1>
-  <div class="form-group col-md-6 col-lg-3">
-    <label for="statusFilter">Status</label>
-    <select class="form-control" id="statusFilter" [(ngModel)]="statusFilter" (change)="onStatusFilterChanged()">
-      <option value="">All</option>
-      <option value="Liked">Liked</option>
-      <option value="DisLiked">DisLiked</option>
-      <option valiue="Unavaliable">Unavaliable</option>
-      <option valiue="Commented">Commented</option>
-    </select>
+  <div class="row">
+    <div class="form-group col-md-6 col-lg-3">
+      <label for="statusFilter">Status</label>
+      <select class="form-control" id="statusFilter" [(ngModel)]="statusFilter" (change)="onFilterChanged()">
+        <option value="">All</option>
+        <option value="Liked">Liked</option>
+        <option value="DisLiked">DisLiked</option>
+        <option valiue="Unavaliable">Unavaliable</option>
+        <option valiue="Commented">Commented</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6 col-lg-3">
+      <label for="itemsPerPage">Show</label>
+      <select class="form-control" id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="onFilterChanged()">
+        <option value="">10</option>
+        <option value="20">20</option>
+        <option valiue="50">50</option>
+        <option valiue="100">100</option>
+      </select>
+    </div>
   </div>
-  <table class="table table-hover table-striped">
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th>Source</th>
-        <th>Listed</th>
-        <th>Expires</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let apartment of apartments;let i=index;">
-        <td>{{apartment.description}}</td>
-        <td (click)="stopEventPropagation($event)"><a [href]="apartment.originalLink" target="_blank">{{apartment.source}}</a></td>
-        <td>{{apartment.listedAt |amTimeAgo}}</td>
-        <td>{{apartment.expiresAt |amTimeAgo}}</td>
-        <td (click)="stopEventPropagation($event)">
-          <button class="btn btn-sm" (click)="updateStauts(i, 'DisLiked')" [ngClass]="{'text-danger': apartment.status=='DisLiked'}">
-            <fa-icon [icon]="faHeartBroken"></fa-icon>
-          </button>
-          <button class="btn btn-sm" (click)="updateStauts(i,'Liked')" [ngClass]="{'text-danger': apartment.status=='Liked'}">
-            <fa-icon [icon]="faHeart"></fa-icon>
-          </button>
-          <button class="btn btn-sm" (click)="updateStauts(i,'Unavaliable')" [ngClass]="{'text-danger': apartment.status=='Unavaliable'}">
-            <fa-icon [icon]="faBan"></fa-icon>
-          </button>
-          <button class="btn btn-sm" (click)="addComment(i)" [ngClass]="{'text-success': apartment.comment && apartment.comment!=''}">
-            <fa-icon [icon]="faComment"></fa-icon>
-          </button>
-          <button class="btn btn-sm" (click)="getLocation(i)">
-            <fa-icon [icon]="faMapMarked"></fa-icon>
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="!apartments || apartments.length==0">
-        <td colspan="4" class="text-center">No Records Found</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Source</th>
+          <th>Listed</th>
+          <th>Expires</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let apartment of (apartmentListing && apartmentListing.data);let i=index;">
+          <td>{{apartment.description}}</td>
+          <td (click)="stopEventPropagation($event)"><a [href]="apartment.originalLink"
+              target="_blank">{{apartment.source}}</a></td>
+          <td>{{apartment.listedAt |amTimeAgo}}</td>
+          <td>{{apartment.expiresAt |amTimeAgo}}</td>
+          <td (click)="stopEventPropagation($event)">
+            <button class="btn btn-sm" (click)="updateStauts(i, 'DisLiked')"
+              [ngClass]="{'text-danger': apartment.status=='DisLiked'}">
+              <fa-icon [icon]="faHeartBroken"></fa-icon>
+            </button>
+            <button class="btn btn-sm" (click)="updateStauts(i,'Liked')"
+              [ngClass]="{'text-danger': apartment.status=='Liked'}">
+              <fa-icon [icon]="faHeart"></fa-icon>
+            </button>
+            <button class="btn btn-sm" (click)="updateStauts(i,'Unavaliable')"
+              [ngClass]="{'text-danger': apartment.status=='Unavaliable'}">
+              <fa-icon [icon]="faBan"></fa-icon>
+            </button>
+            <button class="btn btn-sm" (click)="addComment(i)"
+              [ngClass]="{'text-success': apartment.comment && apartment.comment!=''}">
+              <fa-icon [icon]="faComment"></fa-icon>
+            </button>
+            <button class="btn btn-sm" (click)="getLocation(i)">
+              <fa-icon [icon]="faMapMarked"></fa-icon>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!apartmentListing || apartmentListing.data.length==0">
+          <td colspan="5" class="text-center">No Records Found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="apartmentListing">
+    <pagination [totalItems]="apartmentListing.meta.total" [itemsPerPage]="apartmentListing.meta.pageSize"
+      [(ngModel)]="currentPage" (pageChanged)="onFilterChanged()"></pagination>
+  </div>
 </div>

@@ -3,7 +3,7 @@ import { ApartmentDetailModalComponent } from './apartment-detail-modal/apartmen
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap';
 import { Component, OnInit } from '@angular/core';
 import { ApartmentService } from './apartment.service';
-import { Apartment } from './apartment';
+import { Apartment, ApartmentListing } from './apartment';
 import { faHeart, faHeartBroken, faBan, faComment, faMapMarked } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -14,7 +14,7 @@ import { faHeart, faHeartBroken, faBan, faComment, faMapMarked } from '@fortawes
 })
 export class AppComponent implements OnInit {
   title = 'ja-rentals-client';
-  apartments: Apartment[];
+  apartmentListing: ApartmentListing;
   bsModalRef: BsModalRef;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
@@ -23,15 +23,15 @@ export class AppComponent implements OnInit {
   faMapMarked = faMapMarked;
   statusFilter = '';
   showComments = false;
+  itemsPerPage = 50;
+  currentPage = 1;
 
   constructor(private apartmentService: ApartmentService, private modalService: BsModalService) {
 
   }
 
   ngOnInit() {
-    this.apartmentService.getListings().subscribe(apartments => {
-      this.apartments = apartments;
-    });
+    this.onFilterChanged();
   }
 
   showApartmentDetail(apartment: Apartment) {
@@ -47,31 +47,32 @@ export class AppComponent implements OnInit {
   }
 
   updateStauts(index: number, status: string) {
-    if (status === this.apartments[index].status) {
+    if (status === this.apartmentListing.data[index].status) {
       status = null;
     }
-    this.apartmentService.update(this.apartments[index]._id, {
+    this.apartmentService.update(this.apartmentListing.data[index]._id, {
       status
     })
       .subscribe(updatedApartment => {
-        this.apartments[index] = updatedApartment;
+        this.apartmentListing.data[index] = updatedApartment;
       });
   }
 
   addComment(index: number) {
     const modalOptions: ModalOptions = {
-      initialState: { apartment: this.apartments[index] },
+      initialState: { apartment: this.apartmentListing.data[index] },
       class: 'modal-lg'
     };
     this.bsModalRef = this.modalService.show(CommentModalComponent, modalOptions);
   }
 
-  onStatusFilterChanged() {
-    console.log(this.showComments);
+  onFilterChanged() {
     this.apartmentService.getListings({
-      statusFilter: this.statusFilter
-    }).subscribe(apartments => {
-      this.apartments = apartments;
+      status: this.statusFilter,
+      page_size: this.itemsPerPage,
+      pagge: this.currentPage
+    }).subscribe(apartmentListing => {
+      this.apartmentListing = apartmentListing;
     });
   }
 
